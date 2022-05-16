@@ -1,13 +1,14 @@
 import cv2
 import numpy as np
 
+
 def func(x, a, b):
     return b + a * x
+
 
 cam = cv2.VideoCapture('test.mp4')
 width = 480
 height = 240
-
 
 ableft = []
 left_top = (0, 0)
@@ -23,11 +24,11 @@ xm3 = 0
 ym3 = 0
 xm4 = 0
 ym4 = 0
-b1  = 0
-a1  = 0
-b2  = 0
-a2  = 0
-ok  = 1
+b1 = 0
+a1 = 0
+b2 = 0
+a2 = 0
+ok = 1
 
 while True:
 
@@ -109,7 +110,7 @@ while True:
     topDownFilteredCopy = topDownFiltered.copy()
     topDownFilteredCopy[0:height, 0:(int(width * 0.05))] = 0
     topDownFilteredCopy[0:height, (int(width * 0.95)):width] = 0
-    topDownFilteredCopy[(int(0.95*height)):height, :] = 0
+    topDownFilteredCopy[(int(0.95 * height)):height, :] = 0
     cv2.imshow('Edge Removed', topDownFilteredCopy)
 
     topDownFilteredCopy = cv2.morphologyEx(topDownFilteredCopy, cv2.MORPH_OPEN, (3, 3))
@@ -193,14 +194,9 @@ while True:
     else:
         ok = 2
 
-
     cv2.line(topDownFilteredCopy, right_top, right_bottom, (255, 0, 0), 10)
     cv2.line(topDownFilteredCopy, left_top, left_bottom, (255, 0, 0), 10)
     cv2.imshow('Lines', topDownFilteredCopy)
-
-
-
-
 
     """
 
@@ -266,11 +262,10 @@ while True:
     # 11
     blackFrame2 = np.zeros(frame.shape, dtype=np.uint8)
     cv2.line(blackFrame2, left_top, left_bottom, (255, 0, 0), 3)
-    magic_matrix2 =\
+    magic_matrix2 = \
         cv2.getPerspectiveTransform(np.array([(width, 0), (0, 0), lower_left, lower_right], dtype=np.float32), trapez)
 
     result1 = cv2.warpPerspective(blackFrame2, magic_matrix2, (width, height))
-
 
     blackFrame3 = np.zeros(frame.shape, dtype=np.uint8)
     cv2.line(blackFrame3, right_top, right_bottom, (255, 0, 0), 3)
